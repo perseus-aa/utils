@@ -1,0 +1,51 @@
+from dataclasses import dataclass
+
+@dataclass(kw_only=True)
+class Vase:
+    id: str
+    accession_number: str = None
+    attributed_by: str = None
+    beazley_number: str = None
+    ceramic_phase: str = None
+    collection: str = None
+    collection_history: str = None
+    comparanda: str = None
+    condit: str = None
+    context: str = None
+    context_mod: str = None
+    date_description: str = None
+    date_for_sort: str = None
+    decoration_description: str = None
+    dimensions: str = None
+    end_date: str = None
+    end_mod: str = None
+    entered_by: str = None
+    essay_number: str = None
+    essay_text: str = None
+    graffiti: str = None
+    image: str = None
+    inscriptions: str = None
+    location: str = None
+    material_description: str = None
+    name: str = None
+    other_bibliography: str = None
+    painter: str = None
+    painter_mod: str = None
+    period: str = None
+    period_for_sort: str = None
+    perseus_version: str = None
+    potter: str = None
+    potter_mod: str = None
+    primary_citation: str = None
+    region: str = None
+    relief: str = None
+    shape: str = None
+    shape_description: str = None
+    sources_used: str = None
+    start_date: str = None
+    start_mod: str = None
+    summary: str = None
+    type: str = None
+    unitary_date: str = None
+    unitary_mod: str = None
+    ware: str = None
