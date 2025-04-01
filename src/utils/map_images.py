@@ -15,30 +15,55 @@ from pathlib import Path
 import json
 import sys
 
-data_dir = Path("/Users/wulfmanc/gh/perseus-aa/utils/data")
+
+class Db:
+    def __init__(self, artifact_file, image_file):
+        with open(image_file, 'r') as f:
+            self.images = json.load(f)
+
+        with open(artifact_file, 'r') as f:
+            self.artifacts = json.load(f)
+
+
+    def obj_by_id(self, obj_id):
+        return filter(lambda x: x.get('id') == obj_id, self.artifacts)
+
+    def obj_name(self, obj_id):
+        objects = self.obj_by_id(obj_id)
+        return next(objects)['name']
+
+    def imgs_by_name(self, name):
+        return filter(lambda x: x.get('name') and name in x.get('name'), self.images)
+
+    def obj_images(self, obj_id):
+        obj_name = self.obj_name(obj_id)
+        return self.imgs_by_name(obj_name)
+
+
+    def obj_image_map(self):
+        imap = {}
+
+        for artifact in self.artifacts:
+            a_id = artifact['id']
+
+            if imap.get(a_id) is None:
+                imap[a_id] = []
+
+            for i in self.obj_images(a_id):
+                imap[a_id].append(i['id'])
+
+        return imap
+
+
+
+data_dir = Path("/Users/wulfmanc/gh/perseus-aa/json")
 images_f = data_dir / Path('images.json')
 vases_f = data_dir / Path('vases.json')
 
+db = Db(vases_f, images_f)
 
 
-with open(images_f) as f:
-    images = json.load(f)
 
-with open(vases_f) as f:
-    vases = json.load(f)
-
-
-def retrieve_by_prop(prop, val, dict_list):
-    return filter(lambda x: x.get(prop) == val, dict_list)
-
-img_by_name = partial(retrieve_by_prop, "name", dict_list=images)
-
-obj_by_id = partial(retrieve_by_prop, 'id', dict_list=vases)
-
-def object_images(object_id):
-    object = next(obj_by_id(object_id))
-    return img_by_name(object['name'])
-    
 
 def object_image_map(objects, images):
     imap = {}
