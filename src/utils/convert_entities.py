@@ -101,7 +101,7 @@ def convert_entities(line):
     line = line.replace('&lt;', '<')
     line = line.replace('&gt;', '>')
     
-    
+    line = line.replace('&koppa;', u"\u03DF")
 
     line = re.sub('&responsibility;', '', line)
     line = re.sub('&fund.DLI2;', '', line)
